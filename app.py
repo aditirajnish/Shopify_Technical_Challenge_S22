@@ -7,7 +7,7 @@ import csv
 
 app = Flask(__name__)
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///products.db"  # relative path
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 db = SQLAlchemy(app)
 
 # Create model for Products with the following attributes.
@@ -23,7 +23,7 @@ def create_table():
     db.create_all()
 
 
-@app.route('/', methods=["POST", "GET"])
+@app.route("/", methods=["POST", "GET"])
 def index():
     columns = [column.name for column in Products.__mapper__.columns if column.name != "id"]
 
@@ -41,7 +41,7 @@ def index():
     # View a list of the products.
     else:
         products = Products.query.all()
-        return render_template('index.html', products=products, columns=columns)
+        return render_template("index.html", products=products, columns=columns)
 
 
 @app.route("/delete/<int:id>")
@@ -103,5 +103,5 @@ def export():
     )
 
 
-if __name__ == '__main__':
-    app.run(debug=True)
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=8080)
